@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace expr {
 
@@ -111,6 +112,27 @@ namespace expr {
         column_ = col;
         
         return token;
+    }
+
+    std::vector<Token> Lexer::tokenize() {
+        std::vector<Token> tokens;
+
+        if (isAtEnd()) {
+            tokens.push_back(makeToken(TokenType::END_OF_FILE));
+            return tokens;
+        }
+
+        while (!isAtEnd()) {
+            Token token = nextToken();
+            tokens.push_back(token);
+
+            if (token.type == TokenType::INVALID ||
+                token.type == TokenType::END_OF_FILE) {
+                break;
+            }
+        }
+
+        return tokens;
     }
 
 } // namespace expr
