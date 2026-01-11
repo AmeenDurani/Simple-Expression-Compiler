@@ -9,6 +9,9 @@
 
 namespace expr {
 
+    Token::Token(TokenType t, std::string lex, double val, size_t ln, size_t col)
+        : type(t), lexeme(std::move(lex)), value(val), line(ln), column(col) {}
+
     Lexer::Lexer(const std::string& source) 
         : source_(source), current_(0), line_(0), column_(0) {}
 
