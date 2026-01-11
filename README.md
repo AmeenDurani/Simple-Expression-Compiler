@@ -8,18 +8,16 @@
 - Simple interpreter or JIT executor
 
 **Example Input/Output:**
-Input:  (3 + 5) * 2 - 4 / 2
-Output: LLVM IR or bytecode that evaluates to 14
-Tech Stack:
 
-**Language:** C++ or Rust
+- **Input:**  (3 + 5) * 2 - 4 / 2
+- **Output:** LLVM IR or bytecode that evaluates to 14
 
-**Tools:** LLVM, Flex/Bison
-
-**Build:** CMake or Cargo
+**Tech Stack:**
+- **Language:** C++ or Rust
+- **Tools:** LLVM, Flex/Bison
+- **Build:** CMake or Cargo
 
 **Learning Outcomes:**
-
 - Lexical analysis and tokenization
 - Parsing techniques (recursive descent, operator precedence)
 - AST construction and traversal
@@ -27,7 +25,6 @@ Tech Stack:
 - LLVM IR basics
 
 **Extensions:**
-
 - Add variables and assignment
 - Implement functions with parameters
 - Add type checking (int, float, bool)
