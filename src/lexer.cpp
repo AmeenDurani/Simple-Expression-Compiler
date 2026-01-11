@@ -1,6 +1,8 @@
 #include "lexer.h"
 #include <cctype>
+#include <cstddef>
 #include <iostream>
+#include <string>
 
 namespace expr {
 
@@ -50,6 +52,65 @@ namespace expr {
         }
     }
 
-    
+    Token Lexer::makeToken(TokenType type) {
+        return Token(type);
+    }
+
+    Token Lexer::errorToken(const std::string& message) {
+        return Token(TokenType::INVALID, message, 0.0, line_, column_);
+    }
+
+    Token Lexer::number() {
+        size_t start = current_;
+
+        while (std::isdigit(peek())) {
+            advance();
+        }
+
+        // Extract the number string and convert to double
+        std::string numStr = source_.substr(start, current_ - start);
+        double val = std::stod(numStr);
+
+        return Token(TokenType::NUMBER, numStr, val, line_, column_);
+    }
+
+    Token Lexer::nextToken() {
+        skipWhitespace();
+
+        if (isAtEnd()) {
+            return makeToken(TokenType::END_OF_FILE);
+        }
+
+        char c = advance();
+
+        switch (c) {
+            case '+': return makeToken(TokenType::PLUS);
+            case '-': return makeToken(TokenType::MINUS);
+            case '*': return makeToken(TokenType::STAR);
+            case '/': return makeToken(TokenType::SLASH);
+            case '(': return makeToken(TokenType::LPAREN);
+            case ')': return makeToken(TokenType::RPAREN);    
+        }
+
+        if (std::isdigit(c)) {
+            return number();
+        }
+
+        return errorToken("Unexpected character " + std::string(1, c));
+    }
+
+    Token Lexer::peekToken() {
+        size_t curr = current_;
+        size_t ln = line_;
+        size_t col = column_;
+        
+        Token token = nextToken();
+
+        current_ = curr;
+        line_ = ln;
+        column_ = col;
+        
+        return token;
+    }
 
 } // namespace expr

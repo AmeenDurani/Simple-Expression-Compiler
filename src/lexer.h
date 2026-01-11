@@ -12,7 +12,7 @@ namespace expr {
     NUMBER,
     PLUS,
     MINUS,
-    START,
+    STAR,
     SLASH,
     LPAREN,
     RPAREN,
