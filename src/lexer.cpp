@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#define CaseTokenTypeToSting(x) case x: return #x;
+
 namespace expr {
 
     Lexer::Lexer(const std::string& source) 
@@ -133,6 +135,31 @@ namespace expr {
         }
 
         return tokens;
+    }
+
+    std::string tokenTypeToString(TokenType type) {
+        switch (type) {
+            CaseTokenTypeToSting(TokenType::NUMBER);
+            CaseTokenTypeToSting(TokenType::PLUS);
+            CaseTokenTypeToSting(TokenType::MINUS);
+            CaseTokenTypeToSting(TokenType::STAR);
+            CaseTokenTypeToSting(TokenType::SLASH);
+            CaseTokenTypeToSting(TokenType::LPAREN);
+            CaseTokenTypeToSting(TokenType::RPAREN);
+            CaseTokenTypeToSting(TokenType::END_OF_FILE);
+            CaseTokenTypeToSting(TokenType::INVALID);
+            default: return "UNKNOWN";
+        }
+    }
+
+    void printToken(const Token& token) {
+        std::cout << "[" << tokenTypeToString(token.type) << "] ";
+        if (token.type == TokenType::NUMBER) {
+            std::cout << "value=" << token.value;
+        } else if (!token.lexeme.empty()) {
+            std::cout << "lexeme=" << token.lexeme;
+        }
+        std::cout << " (line " << token.line << " col " << token.column << ")\n";
     }
 
 } // namespace expr
